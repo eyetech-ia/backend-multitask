@@ -1,17 +1,17 @@
 'use strict'
-const User = use('App/Models/User')
-const { uuid } = require('uuidv4')
+const Quest = use('App/Models/Quest')
+const DB = use('Database')
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
 /**
- * Resourceful controller for interacting with users
+ * Resourceful controller for interacting with quests
  */
-class UserController {
+class QuestController {
   /**
-   * Show a list of all users.
-   * GET users
+   * Show a list of all quests.
+   * GET quests
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -19,26 +19,39 @@ class UserController {
    * @param {View} ctx.view
    */
   async index ({ request, response, view }) {
+    const quests = DB.select('*').from('quests').join('asks', 'asks.quest_id', 'quests.id')
+    return quests
   }
 
   /**
-   * Create/save a new user.
-   * POST users
+   * Render a form to be used for creating a new quest.
+   * GET quests/create
+   *
+   * @param {object} ctx
+   * @param {Request} ctx.request
+   * @param {Response} ctx.response
+   * @param {View} ctx.view
+   */
+  async create ({ request, response, view }) {
+  }
+
+  /**
+   * Create/save a new quest.
+   * POST quests
    *
    * @param {object} ctx
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
   async store ({ request, response }) {
-    const data = request.only(['name', 'cpf', 'cargo', 'locale_id', 'has_login', 'email', 'password'])
-    data.register_token = uuid()
-    const user = await User.create(data)
-    return user
+    const data = request.only(['name'])
+    const quest = await Quest.create(data)
+    return quest
   }
 
   /**
-   * Display a single user.
-   * GET users/:id
+   * Display a single quest.
+   * GET quests/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -49,8 +62,8 @@ class UserController {
   }
 
   /**
-   * Render a form to update an existing user.
-   * GET users/:id/edit
+   * Render a form to update an existing quest.
+   * GET quests/:id/edit
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -61,8 +74,8 @@ class UserController {
   }
 
   /**
-   * Update user details.
-   * PUT or PATCH users/:id
+   * Update quest details.
+   * PUT or PATCH quests/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -72,8 +85,8 @@ class UserController {
   }
 
   /**
-   * Delete a user with id.
-   * DELETE users/:id
+   * Delete a quest with id.
+   * DELETE quests/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -83,4 +96,4 @@ class UserController {
   }
 }
 
-module.exports = UserController
+module.exports = QuestController

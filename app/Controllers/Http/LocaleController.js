@@ -1,17 +1,16 @@
 'use strict'
-const User = use('App/Models/User')
-const { uuid } = require('uuidv4')
+const Locale = use('App/Models/Locale')
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
 /**
- * Resourceful controller for interacting with users
+ * Resourceful controller for interacting with locales
  */
-class UserController {
+class LocaleController {
   /**
-   * Show a list of all users.
-   * GET users
+   * Show a list of all locales.
+   * GET locales
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -22,23 +21,34 @@ class UserController {
   }
 
   /**
-   * Create/save a new user.
-   * POST users
+   * Render a form to be used for creating a new locale.
+   * GET locales/create
+   *
+   * @param {object} ctx
+   * @param {Request} ctx.request
+   * @param {Response} ctx.response
+   * @param {View} ctx.view
+   */
+  async create ({ request, response, view }) {
+  }
+
+  /**
+   * Create/save a new locale.
+   * POST locales
    *
    * @param {object} ctx
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
   async store ({ request, response }) {
-    const data = request.only(['name', 'cpf', 'cargo', 'locale_id', 'has_login', 'email', 'password'])
-    data.register_token = uuid()
-    const user = await User.create(data)
-    return user
+    const data = request.only(['name', 'city', 'state', 'address', 'neighborn', 'number'])
+    const locale = await Locale.create(data)
+    return locale
   }
 
   /**
-   * Display a single user.
-   * GET users/:id
+   * Display a single locale.
+   * GET locales/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -49,8 +59,8 @@ class UserController {
   }
 
   /**
-   * Render a form to update an existing user.
-   * GET users/:id/edit
+   * Render a form to update an existing locale.
+   * GET locales/:id/edit
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -61,8 +71,8 @@ class UserController {
   }
 
   /**
-   * Update user details.
-   * PUT or PATCH users/:id
+   * Update locale details.
+   * PUT or PATCH locales/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -72,8 +82,8 @@ class UserController {
   }
 
   /**
-   * Delete a user with id.
-   * DELETE users/:id
+   * Delete a locale with id.
+   * DELETE locales/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -83,4 +93,4 @@ class UserController {
   }
 }
 
-module.exports = UserController
+module.exports = LocaleController

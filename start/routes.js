@@ -7,6 +7,12 @@ Route.get('/', () => {
   return { greeting: 'Hello world in JSON' }
 })
 
-Route.post('users', 'UserController.store')
+Route.resource('users', 'UserController')
 
 Route.post('login', 'SessionController.store')
+
+Route.resource('locale', 'LocaleController')
+
+Route.resource('quest', 'QuestController')
+
+Route.resource('ask', 'AskController')
