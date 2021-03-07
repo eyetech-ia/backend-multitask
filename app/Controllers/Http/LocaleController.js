@@ -41,7 +41,7 @@ class LocaleController {
    * @param {Response} ctx.response
    */
   async store ({ request, response }) {
-    const data = request.only(['name', 'city', 'state', 'address', 'neighborn', 'number'])
+    const data = request.only(['name', 'zipCode', 'street', 'city', 'state', 'neighborn', 'number'])
     const locale = await Locale.create(data)
     return locale
   }

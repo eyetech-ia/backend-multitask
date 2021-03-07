@@ -8,9 +8,10 @@ class LocaleSchema extends Schema {
     this.create('locales', (table) => {
       table.increments()
       table.string('name').notNullable()
+      table.string('zipCode')
+      table.string('street').notNullable()
       table.string('city').notNullable()
       table.string('state').notNullable()
-      table.string('address').notNullable()
       table.string('neighborn').notNullable()
       table.string('number').notNullable()
       table.timestamps()

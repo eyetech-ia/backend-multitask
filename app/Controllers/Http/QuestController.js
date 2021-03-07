@@ -19,7 +19,8 @@ class QuestController {
    * @param {View} ctx.view
    */
   async index ({ request, response, view }) {
-    const quests = DB.select('*').from('quests').join('asks', 'asks.quest_id', 'quests.id')
+    //
+    const quests = await Quest.all()
     return quests
   }
 

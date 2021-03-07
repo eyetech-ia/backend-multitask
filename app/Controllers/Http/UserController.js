@@ -30,7 +30,8 @@ class UserController {
    * @param {Response} ctx.response
    */
   async store ({ request, response }) {
-    const data = request.only(['name', 'cpf', 'cargo', 'locale_id', 'has_login', 'email', 'password'])
+    const data = request.only(['name', 'cpf', 'cargo', 'locale_id', 'birthdate', 'email', 'password'])
+    data.has_login = false
     data.register_token = uuid()
     const user = await User.create(data)
     return user

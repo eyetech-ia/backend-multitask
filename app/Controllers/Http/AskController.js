@@ -1,5 +1,6 @@
 'use strict'
 const Ask = use('App/Models/Ask')
+const DB = use('Database')
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
@@ -58,6 +59,13 @@ class AskController {
    * @param {View} ctx.view
    */
   async show ({ params, request, response, view }) {
+    const { id } = params
+
+    console.log('id', id)
+    const asks = await DB.select('*').from('asks').where('quest_id', id)
+    // const asks = await Ask.all().where('quest_id', id)
+
+    return asks
   }
 
   /**

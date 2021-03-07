@@ -8,8 +8,9 @@ class UserSchema extends Schema {
     this.create('users', (table) => {
       table.increments()
       table.string('name').notNullable()
-      table.string('cpf').notNullable()
+      table.string('cpf').notNullable().unique()
       table.string('cargo').notNullable()
+      table.datetime('birthdate').notNullable()
       table
         .integer('locale_id')
         .unsigned()
