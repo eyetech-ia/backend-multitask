@@ -1,13 +1,15 @@
-FROM node:8
+FROM node:latest
 
-WORKDIR . /app
+WORKDIR /app
 
-COPY package*.json ./
+RUN apt update && apt upgrade -y
+
+COPY . /app
 
 RUN npm install
 
-COPY . .
+RUN node ace migration:run &> log.txt
 
-EXPOSE 8080
+EXPOSE 5000
 
-CMD [ "npm", "start" ]
+ENTRYPOINT [ "node index.js" ]
