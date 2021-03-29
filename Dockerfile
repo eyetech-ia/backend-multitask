@@ -12,4 +12,4 @@ RUN node ace migration:run &> log.txt
 
 EXPOSE 5000
 
-ENTRYPOINT [ "node index.js" ]
+ENTRYPOINT [ "npm", "start" ]
