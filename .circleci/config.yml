@@ -11,9 +11,17 @@ workflows:
 jobs:
   build_and_deploy_job:
     docker:
-      - image: busybox
+      - image: google/cloud-sdk
     steps:
+      - checkout
+
       - run:
           name: backend
           command: |
             echo "Hello, world"
+      - run:
+        name: deploy to app engine
+        command: |
+          gcloud config set project bb-multichecker
+          gcloud config set compute/region southamerica-east1
+          gcloup app deploy
