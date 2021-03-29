@@ -18,6 +18,7 @@ class LocaleController {
    * @param {View} ctx.view
    */
   async index ({ request, response, view }) {
+    return await Locale.all()
   }
 
   /**
