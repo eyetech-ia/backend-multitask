@@ -2,13 +2,11 @@ FROM node:latest
 
 WORKDIR /app
 
-RUN apt update && apt upgrade -y
-
+RUN npm install -g npm@7.7.6
 COPY . /app
-
 RUN npm install
 
-RUN node ace migration:run &> log.txt
+RUN node ace migration:run
 
 EXPOSE 5000
 

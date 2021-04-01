@@ -28,9 +28,9 @@ Route.group(() => {
 
   Route.post('login', 'SessionController.store')
   Route.resource('users', 'UserController').apiOnly()
-  Route.resource('locale', 'LocaleController').apiOnly().middleware('auth')
-  Route.resource('quest', 'QuestController').apiOnly().middleware('auth')
-  Route.resource('ask', 'AskController').apiOnly().middleware('auth')
+  Route.resource('locale', 'LocaleController').apiOnly()
+  Route.resource('quest', 'QuestController').apiOnly()
+  Route.resource('ask', 'AskController').apiOnly()
   // Route.resource('permissions', 'PermissionController').apiOnly().middleware('auth')
   // Route.resource('roles', 'RoleController').apiOnly().middleware('auth')
   // Route.post('visitante/validate', 'Ambient//ValidateController.store')
