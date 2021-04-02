@@ -4,7 +4,7 @@ services:
     container_name: backend
     build: ./Application
     volumes:
-      - ./Application:/app
+      - .:/app
     ports:
       - '5000:5000'
     networks:
