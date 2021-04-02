@@ -19,6 +19,11 @@ const Env = use('Env')
 Route.get('/', ({ response }) => {
   return response.redirect('/api/v1')
 })
+// Unauthorized Routes
+Route.group(() => {
+  Route.post('login', 'SessionController.store')
+}).prefix('api/v1')
+
 Route.group(() => {
   Route.get('/', () => {
     return {
@@ -26,7 +31,6 @@ Route.group(() => {
     }
   })
 
-  Route.post('login', 'SessionController.store')
   Route.resource('users', 'UserController').apiOnly()
   Route.resource('locale', 'LocaleController').apiOnly()
   Route.resource('quest', 'QuestController').apiOnly()
@@ -35,4 +39,4 @@ Route.group(() => {
   // Route.resource('roles', 'RoleController').apiOnly().middleware('auth')
   // Route.post('visitante/validate', 'Ambient//ValidateController.store')
   // Route.get('visitante/validate/:token', 'Ambient//ValidateController.index')
-}).prefix('api/v1')
+}).prefix('api/v1').middleware(['auth'])
