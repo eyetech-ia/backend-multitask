@@ -41,6 +41,10 @@ class User extends Model {
   //     '@provider:Adonis/Acl/HasPermission'
   //   ]
   // }
+
+  locale () {
+    return this.belongsTo('App/Models/Locale')
+  }
 }
 
 module.exports = User

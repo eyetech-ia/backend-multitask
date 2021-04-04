@@ -20,7 +20,7 @@ class QuestController {
    */
   async index ({ request, response, view }) {
     //
-    const quests = await Quest.all()
+    const quests = await Quest.query().with('children').fetch()
     return quests
   }
 
@@ -94,6 +94,16 @@ class QuestController {
    * @param {Response} ctx.response
    */
   async destroy ({ params, request, response }) {
+    const register = await Quest.findBy('id', params.id)
+    if (!register) {
+      return response.status(401).json({
+        message: 'Erro! não encontrado!'
+      })
+    }
+    await register.delete()
+    return response.status(200).json({
+      message: 'Removido com sucesso!'
+    })
   }
 }
 

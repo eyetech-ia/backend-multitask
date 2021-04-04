@@ -57,6 +57,8 @@ class LocaleController {
    * @param {View} ctx.view
    */
   async show ({ params, request, response, view }) {
+    const record = await Locale.findOrFail(params.id)
+    return record
   }
 
   /**
@@ -91,6 +93,16 @@ class LocaleController {
    * @param {Response} ctx.response
    */
   async destroy ({ params, request, response }) {
+    const register = await Locale.findBy('id', params.id)
+    if (!register) {
+      return response.status(401).json({
+        message: 'Erro! não encontrado!'
+      })
+    }
+    await register.delete()
+    return response.status(200).json({
+      message: 'Removido com sucesso!'
+    })
   }
 }
 

@@ -4,6 +4,9 @@
 const Model = use('Model')
 
 class Ask extends Model {
+  quest () {
+    return this.belongsTo('App/Models/Quest')
+  }
 }
 
 module.exports = Ask

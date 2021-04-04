@@ -4,6 +4,9 @@
 const Model = use('Model')
 
 class Locale extends Model {
+  users () {
+    return this.hasOne('App/Models/User')
+  }
 }
 
 module.exports = Locale

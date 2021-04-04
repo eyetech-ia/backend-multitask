@@ -20,14 +20,7 @@ Route.get('/', ({ response }) => {
   return response.redirect('/api/v1')
 })
 // Unauthorized Routes
-Route.group(() => {
-  Route.get('/', () => {
-    return {
-      success: `Server running on ${Env.get('HOST')} in port: ${Env.get('PORT')}`
-    }
-  })
-  Route.post('login', 'SessionController.store')
-}).prefix('api/v1')
+Route.post('api/v1/login', 'SessionController.store')
 
 // Autenticated Routes
 Route.group(() => {

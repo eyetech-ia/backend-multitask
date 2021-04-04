@@ -1,6 +1,6 @@
 'use strict'
+const { v4: uuidv4 } = require('uuid')
 const User = use('App/Models/User')
-const { uuid } = require('uuidv4')
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
@@ -19,7 +19,7 @@ class UserController {
    * @param {View} ctx.view
    */
   async index ({ request, response, view }) {
-    return await User.all()
+    return await User.query().with('locale').fetch()
   }
 
   /**
@@ -33,7 +33,7 @@ class UserController {
   async store ({ request, response }) {
     const data = request.only(['name', 'cpf', 'cargo', 'locale_id', 'birthdate', 'email', 'password'])
     data.has_login = false
-    data.register_token = uuid()
+    data.register_token = uuidv4()
     const user = await User.create(data)
     return user
   }

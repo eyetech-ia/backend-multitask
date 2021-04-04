@@ -19,6 +19,7 @@ class AskController {
    * @param {View} ctx.view
    */
   async index ({ request, response, view }) {
+    return await Ask.all()
   }
 
   /**
@@ -43,9 +44,7 @@ class AskController {
    */
   async store ({ request, response }) {
     const data = request.only(['name', 'quest_id'])
-
     const ask = await Ask.create(data)
-
     return ask
   }
 
@@ -59,12 +58,7 @@ class AskController {
    * @param {View} ctx.view
    */
   async show ({ params, request, response, view }) {
-    const { id } = params
-
-    console.log('id', id)
-    const asks = await DB.select('*').from('asks').where('quest_id', id)
-    // const asks = await Ask.all().where('quest_id', id)
-
+    const asks = await DB.select('id', 'name', 'quest_id').from('asks').where('quest_id', params.id)
     return asks
   }
 
@@ -100,6 +94,16 @@ class AskController {
    * @param {Response} ctx.response
    */
   async destroy ({ params, request, response }) {
+    const register = await Ask.findBy('id', params.id)
+    if (!register) {
+      return response.status(401).json({
+        message: 'Erro! não encontrado!'
+      })
+    }
+    await register.delete()
+    return response.status(200).json({
+      message: 'Removido com sucesso!'
+    })
   }
 }
 

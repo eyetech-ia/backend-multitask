@@ -4,6 +4,9 @@
 const Model = use('Model')
 
 class Quest extends Model {
+  children () {
+    return this.hasMany('App/Models/Ask')
+  }
 }
 
 module.exports = Quest
