@@ -1,5 +1,6 @@
 'use strict'
 const Locale = use('App/Models/Locale')
+const City = use('App/Models/City')
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
@@ -17,8 +18,8 @@ class LocaleController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index ({ request, response, view }) {
-    return await Locale.all()
+  async index ({ request, params }) {
+    return City.all()
   }
 
   /**
@@ -42,9 +43,17 @@ class LocaleController {
    * @param {Response} ctx.response
    */
   async store ({ request, response }) {
-    const data = request.only(['name', 'zipCode', 'street', 'city', 'state', 'neighborn', 'number'])
-    const locale = await Locale.create(data)
-    return locale
+    const data = request.only([
+      'name',
+      'zipCode',
+      'street',
+      'city',
+      'city_id',
+      'state',
+      'neighborn',
+      'number'
+    ])
+    return Locale.create(data)
   }
 
   /**
@@ -57,8 +66,7 @@ class LocaleController {
    * @param {View} ctx.view
    */
   async show ({ params, request, response, view }) {
-    const record = await Locale.findOrFail(params.id)
-    return record
+
   }
 
   /**

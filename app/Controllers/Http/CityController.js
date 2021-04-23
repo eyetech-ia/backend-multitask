@@ -1,17 +1,16 @@
 'use strict'
-const crypto = require('crypto')
-const User = use('App/Models/User')
+const City = use('App/Models/City')
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
 /**
- * Resourceful controller for interacting with users
+ * Resourceful controller for interacting with cities
  */
-class UserController {
+class CityController {
   /**
-   * Show a list of all users.
-   * GET users
+   * Show a list of all cities.
+   * GET cities
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -19,29 +18,32 @@ class UserController {
    * @param {View} ctx.view
    */
   async index ({ request, response, view }) {
-    return await User.query().with('locale').fetch()
+    const { cityName } = request.get()
+
+    console.log('nm', cityName)
+    const cityId = await City.findByOrFail('name', 'São Luís')
+    console.log('dd', cityId)
+    return cityId
   }
 
   /**
-   * Create/save a new user.
-   * POST users
+   * Create/save a new city.
+   * POST cities
    *
    * @param {object} ctx
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
   async store ({ request, response }) {
-    const data = request.only(['name', 'cpf', 'cargo', 'locale_id', 'birthdate', 'email', 'password'])
-    data.has_login = false
-    data.token = crypto.randomBytes(10).toString('hex')
-    data.token_created_at = new Date()
-    const user = await User.create(data)
-    return user
+    const data = request.only('city')
+    const city = await City.findOrCreate(data)
+    // return City.create(data)
+    return city
   }
 
   /**
-   * Display a single user.
-   * GET users/:id
+   * Display a single city.
+   * GET cities/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -52,8 +54,8 @@ class UserController {
   }
 
   /**
-   * Render a form to update an existing user.
-   * GET users/:id/edit
+   * Render a form to update an existing city.
+   * GET cities/:id/edit
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -64,8 +66,8 @@ class UserController {
   }
 
   /**
-   * Update user details.
-   * PUT or PATCH users/:id
+   * Update city details.
+   * PUT or PATCH cities/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -75,8 +77,8 @@ class UserController {
   }
 
   /**
-   * Delete a user with id.
-   * DELETE users/:id
+   * Delete a city with id.
+   * DELETE cities/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -86,4 +88,4 @@ class UserController {
   }
 }
 
-module.exports = UserController
+module.exports = CityController

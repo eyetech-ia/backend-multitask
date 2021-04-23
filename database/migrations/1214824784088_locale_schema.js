@@ -11,6 +11,13 @@ class LocaleSchema extends Schema {
       table.string('zipCode')
       table.string('street').notNullable()
       table.string('city').notNullable()
+      table
+        .integer('city_id')
+        .unsigned()
+        .references('id')
+        .inTable('cities')
+        .onUpdate('CASCADE')
+        .onDelete('CASCADE')
       table.string('state').notNullable()
       table.string('neighborn').notNullable()
       table.string('number').notNullable()

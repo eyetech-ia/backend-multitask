@@ -20,7 +20,8 @@ Route.get('/', ({ response }) => {
   return response.redirect('/api/v1')
 })
 // Unauthorized Routes
-Route.post('api/v1/login', 'SessionController.store')
+Route.post('api/v1/login', 'SessionController.login')
+Route.post('api/v1/forgot-password', 'SessionController.forgot')
 
 // Autenticated Routes
 Route.group(() => {
@@ -28,8 +29,10 @@ Route.group(() => {
   Route.resource('locale', 'LocaleController').apiOnly()
   Route.resource('quest', 'QuestController').apiOnly()
   Route.resource('ask', 'AskController').apiOnly()
+  Route.resource('city', 'CityController').apiOnly()
+  Route.get('locale/:name', 'LocaleController.index')
   // Route.resource('permissions', 'PermissionController').apiOnly().middleware('auth')
   // Route.resource('roles', 'RoleController').apiOnly().middleware('auth')
   // Route.post('visitante/validate', 'Ambient//ValidateController.store')
   // Route.get('visitante/validate/:token', 'Ambient//ValidateController.index')
-}).prefix('api/v1').middleware(['auth'])
+}).prefix('api/v1')
