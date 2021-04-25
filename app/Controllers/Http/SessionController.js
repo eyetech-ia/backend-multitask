@@ -24,18 +24,12 @@ class SessionController {
     const { email, password } = request.all()
     try {
       const userActivated = await User.findBy('active', true)
-      if (userActivated) {
-        if (await auth.attempt(email, password)) {
-          const user = await User.findBy('email', email)
-          const token = await auth.generate(user)
-          return response.json({
-            user: user,
-            token: token
-          })
-        }
-      } else {
-        return response.status(404).json({
-          message: 'Erro! Seu cadastro está inativo, favor, verificar email de confirmação!'
+      if (await auth.attempt(email, password)) {
+        const user = await User.findBy('email', email)
+        const token = await auth.generate(user)
+        return response.json({
+          user: user,
+          token: token
         })
       }
     } catch (e) {
