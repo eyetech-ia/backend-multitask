@@ -19,19 +19,7 @@ class LocaleController {
    * @param {View} ctx.view
    */
   async index ({ request, params }) {
-    return City.all()
-  }
-
-  /**
-   * Render a form to be used for creating a new locale.
-   * GET locales/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
+    return Locale.all()
   }
 
   /**
@@ -67,18 +55,6 @@ class LocaleController {
    */
   async show ({ params, request, response, view }) {
 
-  }
-
-  /**
-   * Render a form to update an existing locale.
-   * GET locales/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
   }
 
   /**

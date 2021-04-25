@@ -19,7 +19,7 @@ class UserController {
    * @param {View} ctx.view
    */
   async index ({ request, response, view }) {
-    return await User.query().with('locale').fetch()
+    return User.query().with('locale').fetch()
   }
 
   /**
@@ -31,12 +31,12 @@ class UserController {
    * @param {Response} ctx.response
    */
   async store ({ request, response }) {
-    const data = request.only(['name', 'cpf', 'cargo', 'locale_id', 'birthdate', 'email', 'password'])
+    const data = request.only(['name', 'cpf', 'cargo', 'birthdate', 'email', 'password'])
     data.has_login = false
+    data.locale_id = undefined
     data.token = crypto.randomBytes(10).toString('hex')
     data.token_created_at = new Date()
-    const user = await User.create(data)
-    return user
+    return User.create(data)
   }
 
   /**

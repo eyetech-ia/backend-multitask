@@ -1,5 +1,6 @@
 'use strict'
 const crypto = require('crypto')
+const DB = use('Database')
 const User = use('App/Models/User')
 const Mail = use('Mail')
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
@@ -20,12 +21,26 @@ class SessionController {
    */
   async login ({ request, response, auth }) {
     const { email, password } = request.all()
-    const token = await auth.attempt(email, password)
-    const user = auth.user
-    return {
-      token: token,
-      user: user
-    } // your structured object
+    try {
+      const userActivated = await User.findBy('active', true)
+      if (userActivated) {
+        if (await auth.attempt(email, password)) {
+          const user = await User.findBy('email', email)
+          const token = await auth.generate(user)
+          return response.json({
+            user: user,
+            token: token
+          })
+        }
+      } else {
+        return response.status(404).json({
+          message: 'Erro! Seu cadastro está inativo, favor, verificar email de confirmação!'
+        })
+      }
+    } catch (e) {
+      console.log(e)
+      return response.json({ message: 'Email não cadastrado!' })
+    }
   }
 
   async forgot ({ request, response }) {
