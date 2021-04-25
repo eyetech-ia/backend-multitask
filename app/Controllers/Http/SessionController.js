@@ -29,7 +29,7 @@ class SessionController {
         const token = await auth.generate(user)
         return response.json({
           user: user,
-          token: token
+          token: token.token
         })
       }
     } catch (e) {
