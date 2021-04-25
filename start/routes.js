@@ -14,13 +14,13 @@
 
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
-const Env = use('Env')
 
 Route.get('/', ({ response }) => {
   return response.redirect('/api/v1')
 })
 // Unauthorized Routes
 Route.post('api/v1/login', 'SessionController.login')
+Route.post('api/v1/activate-user', 'SessionController.activate')
 Route.post('api/v1/forgot-password', 'SessionController.forgot')
 
 // Autenticated Routes

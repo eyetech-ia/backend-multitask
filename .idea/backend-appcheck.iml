@@ -9,5 +9,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="multiactionweb" />
+    <orderEntry type="module" module-name="catchup_web" />
   </component>
 </module>

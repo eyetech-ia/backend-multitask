@@ -1,6 +1,7 @@
 'use strict'
 const crypto = require('crypto')
 const User = use('App/Models/User')
+const { v4: uuidv4 } = require('uuid')
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
@@ -34,7 +35,7 @@ class UserController {
     const data = request.only(['name', 'cpf', 'cargo', 'birthdate', 'email', 'password'])
     data.has_login = false
     data.locale_id = undefined
-    data.token = crypto.randomBytes(10).toString('hex')
+    data.token = uuidv4()
     data.token_created_at = new Date()
     return User.create(data)
   }

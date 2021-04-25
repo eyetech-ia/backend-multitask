@@ -3,6 +3,7 @@ const crypto = require('crypto')
 const DB = use('Database')
 const User = use('App/Models/User')
 const Mail = use('Mail')
+const { v4: uuidv4 } = require('uuid')
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
@@ -61,6 +62,32 @@ class SessionController {
         }
 
       )
+    } catch (e) {
+      return response.status(e.status).send({ error: { message: 'Email não encontrado na base de dados!' } })
+    }
+  }
+
+  async activate ({ request, response }) {
+    try {
+      const { token } = request.all()
+      const user = await User.findByOrFail('token', token)
+      if (user.active) {
+        return response.status(400).json({
+          message: 'Usuário já ativo no sistema, faça login utilizando seu email e senha!'
+        })
+      }
+      if (user) {
+        user.active = true
+        user.has_login = true
+        await user.save()
+        return response.status(200).json({
+          message: 'Cadastro ativo com sucesso!'
+        })
+      }
+
+      return response.status(404).json({
+        message: 'Token Inválido'
+      })
     } catch (e) {
       return response.status(e.status).send({ error: { message: 'Email não encontrado na base de dados!' } })
     }

@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/backend-appcheck.iml" filepath="$PROJECT_DIR$/.idea/backend-appcheck.iml" />
+      <module fileurl="file:///media/victor/DATA/Dev/catchup_web/.idea/catchup_web.iml" filepath="/media/victor/DATA/Dev/catchup_web/.idea/catchup_web.iml" />
       <module fileurl="file://$PROJECT_DIR$/../multiactionweb/.idea/multiactionweb.iml" filepath="$PROJECT_DIR$/../multiactionweb/.idea/multiactionweb.iml" />
     </modules>
   </component>
