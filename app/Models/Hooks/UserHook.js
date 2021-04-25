@@ -11,7 +11,7 @@ UserHook.sendNewUserEmail = async (userInstance) => {
   await SendGrid.send({
     to: email,
     from: 'naoresponda@bembrasil.org.br',
-    subject: 'Confirmação do Cadastro',
+    subject: 'Multiaction | Confirmação do Cadastro',
     html: `
         <p>
             olá ${name},
