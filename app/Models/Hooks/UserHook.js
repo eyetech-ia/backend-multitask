@@ -21,7 +21,7 @@ UserHook.sendNewUserEmail = async (userInstance) => {
   }).then(() => {}, error => {
     console.error(error)
     if (error.response) {
-      console.error(error.response.body)
+      console.error('error', error.response.body)
     }
   })
 }

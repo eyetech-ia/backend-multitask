@@ -6,6 +6,7 @@ const Mail = use('Mail')
 const { v4: uuidv4 } = require('uuid')
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
+
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
 /**
@@ -20,25 +21,19 @@ class SessionController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async login ({ request, response, auth }) {
+  async login ({
+    request,
+    response,
+    auth
+  }) {
     const { email, password } = request.all()
-    try {
-      const userActivated = await User.findBy('active', true)
-      if (await auth.attempt(email, password)) {
-        const user = await User.findBy('email', email)
-        const token = await auth.generate(user)
-        return response.json({
-          user: user,
-          token: token.token
-        })
-      }
-    } catch (e) {
-      console.log(e)
-      return response.json({ message: 'Email não cadastrado!' })
-    }
+    return await auth.attempt(email, password)
   }
 
-  async forgot ({ request, response }) {
+  async forgot ({
+    request,
+    response
+  }) {
     try {
       const { email } = request.all()
       const user = await User.findByOrFail('email', email)
@@ -47,21 +42,27 @@ class SessionController {
       await user.save()
       await Mail.send(
         ['emails.forgot_password'],
-        { email, token: user.token, link: `${request.input('redirect_url')}?token=${user.token}` },
+        {
+          email,
+          token: user.token,
+          link: `${request.input('redirect_url')}?token=${user.token}`
+        },
         message => {
           message
             .to(user.email)
             .from('naoresponda@bembrasil.org.br', 'Bem Brasil | Multiaction')
             .subject('Recuperação de Senha')
         }
-
       )
     } catch (e) {
       return response.status(e.status).send({ error: { message: 'Email não encontrado na base de dados!' } })
     }
   }
 
-  async activate ({ request, response }) {
+  async activate ({
+    request,
+    response
+  }) {
     try {
       const { token } = request.all()
       const user = await User.findByOrFail('token', token)
