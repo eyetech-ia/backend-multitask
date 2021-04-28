@@ -20,8 +20,7 @@ class QuestController {
    */
   async index ({ request, response, view }) {
     //
-    const quests = await Quest.query().with('children').fetch()
-    return quests
+    return Quest.all()
   }
 
   /**
